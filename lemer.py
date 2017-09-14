@@ -109,7 +109,7 @@ class UniformityChecker:
             if pow(x, 2) + pow(y, 2) < 1:
                 true_pairs_count += 1
 
-        val = 2 * true_pairs_count / len(pairs)
+        val = true_pairs_count / len(pairs)
         print("2 * K / N: {}\nPI / 4: {}".format(val, pi / 4))
         if pi / 4 - EPS < val < pi / 4 + EPS:
             self.is_uniform = True
