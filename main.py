@@ -30,12 +30,14 @@ def make_lemer_calculation():
     m = None
     r0 = None
     a = None
+    v = None
     error = True
     while error:
         try:
             m = int(input('m: '))
             r0 = int(input('R0: '))
             a = int(input('a: '))
+            v = int(input('v: '))
             if not m > a:
                 print('m must be higher than a')
                 raise ValueError()
@@ -44,11 +46,17 @@ def make_lemer_calculation():
             print('Incorrect input values')
 
     generator = LemerGenerator(m, r0, a)
-    sequence = [i for i in generator]
+    # sequence = [i for i in generator]
+    sequence = []
+    for _ in range(v):
+        sequence.append(generator.__next__())
+    generator._calc_values()
     print_generator_info(generator)
-    # print('Lemer sequence: ', sequence)
+    # print('Lemer sequence: ', generator.r_list)
+    sequence = sequence[:generator.aperiodic]
     write_sequence_to_file(sequence)
     drawer = HistogramDrawer(sequence)
+    print('Checking...')
     uniformityChecker = UniformityChecker(sequence)
     uniformityChecker.check()
     print('Uniformity: ', uniformityChecker.is_uniform)

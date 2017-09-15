@@ -30,17 +30,32 @@ class LemerGenerator:
         self.last_r = self.r0
 
     def _calc_values(self):
-        self.aperiodic = len(self.r_list)
-        self.period = self.aperiodic - self.r_list[::-1].index(self.last_r)
+        print('Calculating...')
+        repeated_element = None
+        is_found = False
+        i = 0
+        while i < len(self.r_list) and not is_found:
+            j = 0
+            while j < len(self.r_list) and not is_found:
+                if not i == j and self.r_list[i] == self.r_list[j]:
+                    self.aperiodic = j
+                    self.period = j - i
+                    is_found = True
+                j += 1
+            i += 1
+        # self.aperiodic = len(self.r_list)
+        # self.period = self.aperiodic - self.r_list[::-1].index(self.last_r)
+        self.v_list = self.v_list[:self.aperiodic]
+        self.r_list = self.r_list[:self.aperiodic]
         self.mathematical_expectation = calc_mathematical_expectation(self.v_list)
         self.dispersion = calc_dispersion(self.v_list, self.mathematical_expectation)
         self.root_mean_square_deviation = calc_root_mean_square_deviation(self.dispersion)
 
     def __next__(self):
         self.last_r = (self.a * self.last_r) % self.m
-        if self.last_r in self.r_list:
-            self._calc_values()
-            raise StopIteration()
+        # if self.last_r in self.r_list:
+        #     self._calc_values()
+        #     raise StopIteration()
 
         self.r_list.insert(0, self.last_r)
         next_value = self.last_r / self.m
@@ -85,16 +100,16 @@ class HistogramDrawer:
     def draw(self):
         _sum = sum(self.intervals)
         plt.bar(np.arange(self.interval_count),
-                self.intervals,
+                list(map(lambda x: x / sum(self.intervals), self.intervals)),
                 color='yellow',
                 edgecolor='black',
                 width=0.8
                 )
         plt.xticks(np.arange(self.interval_count), np.arange(self.interval_count))
-        # plt.show()
-        plt.savefig('result_histogram.png')
+        plt.show()
+        # plt.savefig('result_histogram.png')
 
-EPS = 0.001
+EPS = 0.09
 
 
 class UniformityChecker:
