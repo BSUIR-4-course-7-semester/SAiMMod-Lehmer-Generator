@@ -106,8 +106,8 @@ class HistogramDrawer:
                 width=0.8
                 )
         plt.xticks(np.arange(self.interval_count), np.arange(self.interval_count))
-        # plt.show()
-        plt.savefig('result_histogram.png')
+        plt.show()
+        # plt.savefig('result_histogram.png')
 
 EPS = 0.09
 

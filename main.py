@@ -53,6 +53,7 @@ def make_lemer_calculation():
     generator._calc_values()
     print_generator_info(generator)
     # print('Lemer sequence: ', generator.r_list)
+    sequence = sequence[:generator.aperiodic]
     write_sequence_to_file(sequence)
     drawer = HistogramDrawer(sequence)
     print('Checking...')
