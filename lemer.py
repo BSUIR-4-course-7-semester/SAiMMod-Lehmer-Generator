@@ -94,7 +94,7 @@ class HistogramDrawer:
         # plt.show()
         plt.savefig('result_histogram.png')
 
-EPS = 0.001
+EPS = 0.08
 
 
 class UniformityChecker:
