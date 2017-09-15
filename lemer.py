@@ -38,9 +38,8 @@ class LemerGenerator:
             j = 0
             while j < len(self.r_list) and not is_found:
                 if not i == j and self.r_list[i] == self.r_list[j]:
-                    self.period = j - i
-
                     self.aperiodic = j
+                    self.period = j - i
                     is_found = True
                 j += 1
             i += 1
@@ -101,7 +100,7 @@ class HistogramDrawer:
     def draw(self):
         _sum = sum(self.intervals)
         plt.bar(np.arange(self.interval_count),
-                self.intervals,
+                list(map(lambda x: x / sum(self.intervals), self.intervals)),
                 color='yellow',
                 edgecolor='black',
                 width=0.8
